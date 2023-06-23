@@ -3,7 +3,7 @@
 module HexletCode
   class Tag
     def self.build(name, attrs = {}, &block)
-      paired = %w[div label form]
+      paired = %w[div label form textarea]
       unpaired = %w[br input img]
 
       if paired.include? name
