@@ -5,19 +5,19 @@ require "test_helper"
 class TestHexletCode < Minitest::Test
   User = Struct.new(:name, :job, :gender, keyword_init: true)
 
-  def test_form_for_with_url
+  def test_empty_form
     user = User.new name: "rob"
 
     assert { HexletCode.form_for user, url: "/users" == '<form action="/users" method="post"></form>' }
   end
 
-  def test_form_for_without_url
+  def test_default_url
     user = User.new name: "rob"
 
     assert { HexletCode.form_for user == '<form action="#" method="post"></form>' }
   end
 
-  def test_form_with_input
+  def test_input
     user = User.new name: "rob", job: "hexlet", gender: "m"
 
     form = HexletCode.form_for user do |f|
@@ -25,13 +25,14 @@ class TestHexletCode < Minitest::Test
     end
 
     expected_form = "<form action=\"#\" method=\"post\">"\
+"<label for=\"name\">Name</label>"\
 "<input name=\"name\" type=\"text\" value=\"rob\">"\
 "</form>"
 
     assert { form == expected_form }
   end
 
-  def test_form_with_textarea
+  def test_textarea
     user = User.new name: "rob", job: "hexlet", gender: "m"
 
     form = HexletCode.form_for user do |f|
@@ -39,6 +40,7 @@ class TestHexletCode < Minitest::Test
     end
 
     expected_form = "<form action=\"#\" method=\"post\">"\
+"<label for=\"job\">Job</label>"\
 "<textarea name=\"job\" cols=\"20\" rows=\"40\">hexlet</textarea>"\
 "</form>"
 
@@ -50,12 +52,11 @@ class TestHexletCode < Minitest::Test
 
     form = HexletCode.form_for user, url: "#" do |f|
       f.input :name, class: "user-input"
-      f.input :job
     end
 
     expected_form = "<form action=\"#\" method=\"post\">" \
+"<label for=\"name\">Name</label>"\
 "<input name=\"name\" type=\"text\" value=\"rob\" class=\"user-input\">"\
-"<input name=\"job\" type=\"text\" value=\"\">"\
 "</form>"
 
     assert { form == expected_form }
@@ -67,7 +68,10 @@ class TestHexletCode < Minitest::Test
       f.input :job, as: :text, rows: 50, cols: 50
     end
 
-    expected_form = '<form action="#" method="post"><textarea name="job" cols="50" rows="50">hexlet</textarea></form>'
+    expected_form = "<form action=\"#\" method=\"post\">"\
+"<label for=\"job\">Job</label>"\
+"<textarea name=\"job\" cols=\"50\" rows=\"50\">hexlet</textarea>"\
+"</form>"
 
     assert { form == expected_form }
   end
@@ -81,5 +85,25 @@ class TestHexletCode < Minitest::Test
     end
   rescue NoMethodError => e
     assert_match("undefined method `age' for", e.message)
+  end
+
+  def test_submit
+    user = User.new name: "rob", job: "hexlet", gender: "m"
+    form = HexletCode.form_for user, url: "#", &:submit
+
+    expected_form = "<form action=\"#\" method=\"post\"><input type=\"submit\" value=\"Save\"></form>"
+
+    assert { form == expected_form }
+  end
+
+  def test_submit_with_value
+    user = User.new name: "rob", job: "hexlet", gender: "m"
+    form = HexletCode.form_for user, url: "#" do |f|
+      f.submit "Wow"
+    end
+
+    expected_form = "<form action=\"#\" method=\"post\"><input type=\"submit\" value=\"Wow\"></form>"
+
+    assert { form == expected_form }
   end
 end
