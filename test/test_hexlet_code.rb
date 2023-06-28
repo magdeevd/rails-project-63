@@ -24,10 +24,10 @@ class TestHexletCode < Minitest::Test
       f.input :name
     end
 
-    expected = '<form action="#" method="post">'\
-'<label for="name">Name</label>'\
-'<input name="name" type="text" value="rob">'\
-'</form>'
+    expected = '<form action="#" method="post">' \
+               '<label for="name">Name</label>' \
+               '<input name="name" type="text" value="rob">' \
+               '</form>'
 
     assert { actual == expected }
   end
@@ -39,10 +39,10 @@ class TestHexletCode < Minitest::Test
       f.input :job, as: :text
     end
 
-    expected = '<form action="#" method="post">'\
-'<label for="job">Job</label>'\
-'<textarea name="job" cols="20" rows="40">hexlet</textarea>'\
-'</form>'
+    expected = '<form action="#" method="post">' \
+               '<label for="job">Job</label>' \
+               '<textarea name="job" cols="20" rows="40">hexlet</textarea>' \
+               '</form>'
 
     assert { actual == expected }
   end
@@ -55,9 +55,9 @@ class TestHexletCode < Minitest::Test
     end
 
     expected = '<form action="#" method="post">' \
-'<label for="name">Name</label>'\
-'<input name="name" type="text" value="rob" class="user-input">'\
-'</form>'
+               '<label for="name">Name</label>' \
+               '<input name="name" type="text" value="rob" class="user-input">' \
+               '</form>'
 
     assert { actual == expected }
   end
@@ -68,10 +68,10 @@ class TestHexletCode < Minitest::Test
       f.input :job, as: :text, rows: 50, cols: 50
     end
 
-    expected = '<form action="/users" method="post">'\
-'<label for="job">Job</label>'\
-'<textarea name="job" cols="50" rows="50">hexlet</textarea>'\
-'</form>'
+    expected = '<form action="/users" method="post">' \
+               '<label for="job">Job</label>' \
+               '<textarea name="job" cols="50" rows="50">hexlet</textarea>' \
+               '</form>'
 
     assert { actual == expected }
   end

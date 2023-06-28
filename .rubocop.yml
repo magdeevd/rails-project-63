@@ -14,3 +14,11 @@ Style/StringLiteralsInInterpolation:
 
 Layout/LineLength:
   Max: 120
+
+Layout/LineContinuationSpacing:
+  Enabled: true
+  EnforcedStyle: space
+
+Layout/LineEndStringConcatenationIndentation:
+  Enabled: true
+  EnforcedStyle: aligned
