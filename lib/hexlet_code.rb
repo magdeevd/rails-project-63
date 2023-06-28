@@ -10,8 +10,8 @@ module HexletCode
   autoload :Label, "hexlet_code/inputs/label"
   autoload :Form, "hexlet_code/form"
 
-  def self.form_for(entity, url: "#")
-    f = Form.new(entity, url)
+  def self.form_for(entity, attrs = {})
+    f = Form.new(entity, attrs.key?(:url) ? attrs[:url] : "#", attrs.except(:url))
     yield(f) if block_given?
     f.build
   end
