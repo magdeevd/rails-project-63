@@ -6,8 +6,8 @@ module HexletCode
 
     attr_reader :tag, :attrs
 
-    def initialize(entity, url, attrs = {})
-      @tag = "form"
+    def initialize(entity, url = '#', attrs = {})
+      @tag = 'form'
       @attrs = { action: url, method: :post }.merge(attrs)
       @entity = entity
       @tags = []
@@ -33,7 +33,7 @@ module HexletCode
                end
     end
 
-    def submit(value = "Save")
+    def submit(value = 'Save')
       @tags << Submit.new(value)
     end
   end

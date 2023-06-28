@@ -7,7 +7,7 @@ module HexletCode
     attr_reader :tag, :attrs
 
     def initialize(name, value, attrs = {})
-      @tag = "textarea"
+      @tag = 'textarea'
       @attrs = { name: name, cols: 20, rows: 40 }.merge(attrs)
       @value = value
     end

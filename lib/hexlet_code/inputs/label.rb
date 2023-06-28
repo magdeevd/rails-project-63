@@ -7,7 +7,7 @@ module HexletCode
     attr_reader :tag, :attrs
 
     def initialize(name)
-      @tag = "label"
+      @tag = 'label'
       @attrs = { for: name }
       @value = name.capitalize
     end

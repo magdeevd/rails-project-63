@@ -7,8 +7,8 @@ module HexletCode
     attr_reader :tag, :attrs
 
     def initialize(name, value, attrs = {})
-      @tag = "input"
-      @attrs = { name: name, type: "text", value: value }.merge(attrs)
+      @tag = 'input'
+      @attrs = { name: name, type: 'text', value: value }.merge(attrs)
     end
 
     def paired?
