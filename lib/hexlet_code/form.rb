@@ -6,7 +6,7 @@ module HexletCode
 
     attr_reader :tag, :attrs
 
-    def initialize(entity, url = '#', attrs = {})
+    def initialize(entity, url, attrs = {})
       @tag = 'form'
       @attrs = { action: url, method: :post }.merge(attrs)
       @entity = entity

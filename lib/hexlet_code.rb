@@ -11,7 +11,7 @@ module HexletCode
   autoload :Form, 'hexlet_code/form'
 
   def self.form_for(entity, attrs = {})
-    f = Form.new(entity, attrs[:url], attrs.except(:url))
+    f = Form.new(entity, attrs.key?(:url) ? attrs[:url] : '#', attrs.except(:url))
     yield(f) if block_given?
     f.build
   end
