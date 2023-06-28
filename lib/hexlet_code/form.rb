@@ -2,41 +2,39 @@
 
 module HexletCode
   class Form
-    def initialize(entity)
+    include Tag
+
+    attr_reader :tag, :attrs
+
+    def initialize(entity, action = "#")
+      @tag = "form"
+      @attrs = { action: action, method: "post" }
       @entity = entity
-      @result = ""
+      @tags = []
     end
 
-    def input(name, options = {})
-      value = @entity.public_send(name)
-      @result += render_label(name)
-      @result += if options.key?(:as) && options[:as] == :text
-                   render_textarea(name, value, options.except(:as))
-                 else
-                   render_input(name, value, options.except(:as))
-                 end
+    def paired?
+      true
+    end
+
+    def content
+      @tags.map(&:build).join
+    end
+
+    def input(field, attrs = {})
+      value = @entity.public_send(field)
+
+      @tags << Label.new(field)
+
+      @tags << if attrs.key?(:as) && attrs[:as] == :text
+                 Textarea.new(field, value, attrs.except(:as))
+               else
+                 Input.new(field, value, attrs.except(:as))
+               end
     end
 
     def submit(value = "Save")
-      @result += render_submit(value)
-    end
-
-    private
-
-    def render_textarea(name, value, attrs)
-      Tag.build("textarea", { name: name, cols: 20, rows: 40 }.merge(attrs)) { value }
-    end
-
-    def render_input(name, value, attrs)
-      Tag.build("input", { name: name, type: "text", value: value }.merge(attrs))
-    end
-
-    def render_submit(value)
-      Tag.build("input", { type: "submit", value: value })
-    end
-
-    def render_label(name)
-      Tag.build("label", { for: name }) { name.capitalize }
+      @tags << Submit.new(value)
     end
   end
 end

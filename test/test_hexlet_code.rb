@@ -64,11 +64,11 @@ class TestHexletCode < Minitest::Test
 
   def test_changed_default_attrs
     user = User.new name: "rob", job: "hexlet", gender: "m"
-    form = HexletCode.form_for user, url: "#" do |f|
+    form = HexletCode.form_for user, url: "/users" do |f|
       f.input :job, as: :text, rows: 50, cols: 50
     end
 
-    expected_form = "<form action=\"#\" method=\"post\">"\
+    expected_form = "<form action=\"/users\" method=\"post\">"\
 "<label for=\"job\">Job</label>"\
 "<textarea name=\"job\" cols=\"50\" rows=\"50\">hexlet</textarea>"\
 "</form>"
