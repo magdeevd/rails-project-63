@@ -23,11 +23,11 @@ module HexletCode
     private
 
     def build_unpaired(name, attrs = {})
-      ["<#{name}", !attrs.empty? ? " #{stringify_attrs(attrs)}" : '', '>'].join
+      ["<#{name}", attrs.empty? ? '' : " #{stringify_attrs(attrs)}", '>'].join
     end
 
     def build_paired(name, content, attrs = {})
-      ["<#{name}", !attrs.empty? ? " #{stringify_attrs(attrs)}" : '', '>', content, "</#{name}>"].join
+      ["<#{name}", attrs.empty? ? '' : " #{stringify_attrs(attrs)}", '>', content, "</#{name}>"].join
     end
 
     def stringify_attrs(attrs = {})

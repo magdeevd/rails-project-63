@@ -8,7 +8,7 @@ module HexletCode
 
     def initialize(name, value, attrs = {})
       @tag = 'textarea'
-      @attrs = { name: name, cols: 20, rows: 40 }.merge(attrs)
+      @attrs = { name:, cols: 20, rows: 40 }.merge(attrs)
       @value = value
     end
 

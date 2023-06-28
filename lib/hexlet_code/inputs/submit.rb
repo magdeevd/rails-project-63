@@ -8,7 +8,7 @@ module HexletCode
 
     def initialize(value)
       @tag = 'input'
-      @attrs = { type: 'submit', value: value }
+      @attrs = { type: 'submit', value: }
     end
 
     def paired?

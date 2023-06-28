@@ -8,7 +8,7 @@ module HexletCode
 
     def initialize(name, value, attrs = {})
       @tag = 'input'
-      @attrs = { name: name, type: 'text', value: value }.merge(attrs)
+      @attrs = { name:, type: 'text', value: }.merge(attrs)
     end
 
     def paired?
