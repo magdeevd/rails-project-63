@@ -1,23 +1,18 @@
 # frozen_string_literal: true
 
 module HexletCode
-  class Textarea
+  class StringInput
     include Tag
 
     attr_reader :tag, :attrs
 
     def initialize(name, value, attrs = {})
-      @tag = 'textarea'
-      @attrs = { name:, cols: 20, rows: 40 }.merge(attrs)
-      @value = value
+      @tag = INPUT
+      @attrs = { name:, type: :text, value: }.merge(attrs)
     end
 
     def paired?
-      true
-    end
-
-    def content
-      @value
+      false
     end
   end
 end

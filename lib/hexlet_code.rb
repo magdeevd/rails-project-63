@@ -4,15 +4,15 @@ require_relative 'hexlet_code/version'
 
 module HexletCode
   autoload :Tag, 'hexlet_code/tag'
-  autoload :Input, 'hexlet_code/inputs/input'
-  autoload :Textarea, 'hexlet_code/inputs/textarea'
+  autoload :StringInput, 'hexlet_code/inputs/string_input'
+  autoload :TextInput, 'hexlet_code/inputs/text_input'
   autoload :Submit, 'hexlet_code/inputs/submit'
   autoload :Label, 'hexlet_code/inputs/label'
   autoload :Form, 'hexlet_code/form'
 
   def self.form_for(entity, attrs = {})
-    f = Form.new(entity, attrs.key?(:url) ? attrs[:url] : '#', attrs.except(:url))
-    yield(f) if block_given?
-    f.build
+    form = Form.new(entity, attrs)
+    yield(form) if block_given?
+    form.build
   end
 end

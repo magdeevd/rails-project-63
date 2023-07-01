@@ -4,6 +4,11 @@ module HexletCode
   module Tag
     attr_reader :tag, :attrs
 
+    INPUT = :input
+    TEXTAREA = :textarea
+    LABEL = :label
+    FORM = :form
+
     def paired?
       false
     end

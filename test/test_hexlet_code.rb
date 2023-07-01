@@ -8,28 +8,17 @@ class TestHexletCode < Minitest::Test
   def test_empty_form
     user = User.new name: 'rob'
 
-    assert { HexletCode.form_for user, url: '/users' == '<form action="/users" method="post"></form>' }
+    actual = HexletCode.form_for user, url: '/users'
+
+    assert { actual == get_expected_form_html('empty_form') }
   end
 
   def test_default_url
     user = User.new name: 'rob'
 
-    assert { HexletCode.form_for user == '<form action="#" method="post"></form>' }
-  end
+    actual = HexletCode.form_for user
 
-  def test_input
-    user = User.new name: 'rob', job: 'hexlet', gender: 'm'
-
-    actual = HexletCode.form_for user do |f|
-      f.input :name
-    end
-
-    expected = '<form action="#" method="post">' \
-               '<label for="name">Name</label>' \
-               '<input name="name" type="text" value="rob">' \
-               '</form>'
-
-    assert { actual == expected }
+    assert { actual == get_expected_form_html('form_with_default_action') }
   end
 
   def test_textarea
@@ -39,27 +28,17 @@ class TestHexletCode < Minitest::Test
       f.input :job, as: :text
     end
 
-    expected = '<form action="#" method="post">' \
-               '<label for="job">Job</label>' \
-               '<textarea name="job" cols="20" rows="40">hexlet</textarea>' \
-               '</form>'
-
-    assert { actual == expected }
+    assert { actual == get_expected_form_html('form_with_textarea') }
   end
 
-  def test_extra_attrs_in_input
+  def test_input
     user = User.new name: 'rob', job: '', gender: 'm'
 
     actual = HexletCode.form_for user, url: '#' do |f|
       f.input :name, class: 'user-input'
     end
 
-    expected = '<form action="#" method="post">' \
-               '<label for="name">Name</label>' \
-               '<input name="name" type="text" value="rob" class="user-input">' \
-               '</form>'
-
-    assert { actual == expected }
+    assert { actual == get_expected_form_html('form_with_input') }
   end
 
   def test_changed_default_attrs
@@ -68,12 +47,7 @@ class TestHexletCode < Minitest::Test
       f.input :job, as: :text, rows: 50, cols: 50
     end
 
-    expected = '<form action="/users" method="post">' \
-               '<label for="job">Job</label>' \
-               '<textarea name="job" cols="50" rows="50">hexlet</textarea>' \
-               '</form>'
-
-    assert { actual == expected }
+    assert { actual == get_expected_form_html('form_with_resized_textarea') }
   end
 
   def test_not_existing_field
@@ -91,9 +65,7 @@ class TestHexletCode < Minitest::Test
     user = User.new name: 'rob', job: 'hexlet', gender: 'm'
     actual = HexletCode.form_for user, url: '#', &:submit
 
-    expected = '<form action="#" method="post"><input type="submit" value="Save"></form>'
-
-    assert { actual == expected }
+    assert { actual == get_expected_form_html('form_with_submit') }
   end
 
   def test_submit_with_value
@@ -102,17 +74,22 @@ class TestHexletCode < Minitest::Test
       f.submit 'Wow'
     end
 
-    expected = '<form action="#" method="post"><input type="submit" value="Wow"></form>'
-
-    assert { actual == expected }
+    assert { actual == get_expected_form_html('submit_with_value') }
   end
 
   def test_form_with_extra_attr
     user = User.new name: 'rob', job: 'hexlet', gender: 'm'
     actual = HexletCode.form_for user, url: '/profile', method: :get, class: 'hexlet-form'
 
-    expected = '<form action="/profile" method="get" class="hexlet-form"></form>'
+    assert { actual == get_expected_form_html('form_with_class') }
+  end
 
-    assert { actual == expected }
+  def test_wrong_as_attr_value
+    user = User.new name: 'rob', job: 'hexlet', gender: 'm'
+    HexletCode.form_for user, url: '/users' do |f|
+      f.input :job, as: :car
+    end
+  rescue ArgumentError => e
+    assert_match('Wrong type for input, use :text or :string', e.message)
   end
 end
