@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
 module HexletCode
-  class TextInput
-    include Tag
-
-    attr_reader :tag, :attrs
+  class TextInput < InputBase
+    INPUT_NAME = :textarea
 
     def initialize(name, value, attrs = {})
-      @tag = TEXTAREA
+      super()
       @attrs = { name:, cols: 20, rows: 40 }.merge(attrs)
       @value = value
     end

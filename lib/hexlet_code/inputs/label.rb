@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
 module HexletCode
-  class Label
-    include Tag
-
-    attr_reader :tag, :attrs
+  class Label < InputBase
+    INPUT_NAME = :label
 
     def initialize(name)
-      @tag = LABEL
+      super()
       @attrs = { for: name }
       @value = name.capitalize
     end

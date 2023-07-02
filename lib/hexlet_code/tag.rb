@@ -2,41 +2,24 @@
 
 module HexletCode
   module Tag
-    attr_reader :tag, :attrs
-
-    INPUT = :input
-    TEXTAREA = :textarea
-    LABEL = :label
-    FORM = :form
-
-    def paired?
-      false
-    end
-
-    def content
-      ''
-    end
-
-    def build
-      if paired?
-        build_paired(@tag, content, @attrs)
+    def self.build(tag, &block)
+      if tag.paired?
+        build_paired(tag.name, tag.attrs, &block)
       else
-        build_unpaired(@tag, @attrs)
+        build_unpaired(tag.name, tag.attrs)
       end
     end
 
-    private
-
-    def build_unpaired(name, attrs = {})
+    def self.build_unpaired(name, attrs = {})
       ["<#{name}", attrs.empty? ? '' : " #{stringify_attrs(attrs)}", '>'].join
     end
 
-    def build_paired(name, content, attrs = {})
-      ["<#{name}", attrs.empty? ? '' : " #{stringify_attrs(attrs)}", '>', content, "</#{name}>"].join
+    def self.build_paired(name, attrs = {})
+      ["<#{name}", attrs.empty? ? '' : " #{stringify_attrs(attrs)}", '>', yield, "</#{name}>"].join
     end
 
-    def stringify_attrs(attrs = {})
-      attrs.map { |attr, value| "#{attr}=\"#{value}\"" }.join(' ')
+    def self.stringify_attrs(attrs = {})
+      attrs.map { |attr, value| "#{attr}=\"#{value}\"" }.join ' '
     end
   end
 end

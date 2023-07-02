@@ -3,16 +3,14 @@
 require 'active_support/inflector'
 
 module HexletCode
-  class Form
-    include Tag
-
-    attr_reader :tag, :attrs
+  class Form < InputBase
+    INPUT_NAME = :form
 
     def initialize(entity, attrs = {})
-      @tag = FORM
+      super()
       @attrs = { action: attrs[:url] || '#', method: :post }.merge(attrs.except(:url))
       @entity = entity
-      @tags = []
+      @content = []
     end
 
     def paired?
@@ -20,19 +18,19 @@ module HexletCode
     end
 
     def content
-      @tags.map(&:build).join
+      @content
     end
 
     def input(field_name, attrs = {})
       value = @entity.public_send(field_name)
 
-      @tags << Label.new(field_name)
+      @content << Label.new(field_name)
 
-      @tags << get_input_class(attrs[:as]).new(field_name, value, attrs.except(:as))
+      @content << get_input_class(attrs[:as]).new(field_name, value, attrs.except(:as))
     end
 
     def submit(value = 'Save')
-      @tags << Submit.new(value)
+      @content << Submit.new(value)
     end
 
     private

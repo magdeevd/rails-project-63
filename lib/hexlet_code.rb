@@ -4,6 +4,7 @@ require_relative 'hexlet_code/version'
 
 module HexletCode
   autoload :Tag, 'hexlet_code/tag'
+  autoload :InputBase, 'hexlet_code/inputs/input_base'
   autoload :StringInput, 'hexlet_code/inputs/string_input'
   autoload :TextInput, 'hexlet_code/inputs/text_input'
   autoload :Submit, 'hexlet_code/inputs/submit'
@@ -13,6 +14,8 @@ module HexletCode
   def self.form_for(entity, attrs = {})
     form = Form.new(entity, attrs)
     yield(form) if block_given?
-    form.build
+    Tag.build(form) do
+      form.content.map { |input| Tag.build(input) { input.content } }.join
+    end
   end
 end

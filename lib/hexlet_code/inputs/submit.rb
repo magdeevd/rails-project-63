@@ -1,18 +1,10 @@
 # frozen_string_literal: true
 
 module HexletCode
-  class Submit
-    include Tag
-
-    attr_reader :tag, :attrs
-
+  class Submit < InputBase
     def initialize(value)
-      @tag = INPUT
+      super()
       @attrs = { type: :submit, value: }
-    end
-
-    def paired?
-      false
     end
   end
 end
