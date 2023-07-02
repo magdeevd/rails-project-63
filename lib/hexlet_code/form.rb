@@ -6,6 +6,8 @@ module HexletCode
   class Form < InputBase
     INPUT_NAME = :form
 
+    attr_reader :content
+
     def initialize(entity, attrs = {})
       super()
       @attrs = { action: attrs[:url] || '#', method: :post }.merge(attrs.except(:url))
@@ -15,10 +17,6 @@ module HexletCode
 
     def paired?
       true
-    end
-
-    def content
-      @content
     end
 
     def input(field_name, attrs = {})
