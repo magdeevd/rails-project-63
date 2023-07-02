@@ -22,3 +22,7 @@ Layout/LineContinuationSpacing:
 Layout/LineEndStringConcatenationIndentation:
   Enabled: true
   EnforcedStyle: aligned
+
+Naming/BlockForwarding:
+  Enabled: true
+  EnforcedStyle: anonymous

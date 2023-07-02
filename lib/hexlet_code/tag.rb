@@ -2,9 +2,9 @@
 
 module HexletCode
   module Tag
-    def self.build(tag, &block)
+    def self.build(tag, &)
       if tag.paired?
-        build_paired(tag.name, tag.attrs, &block)
+        build_paired(tag.name, tag.attrs, &)
       else
         build_unpaired(tag.name, tag.attrs)
       end
