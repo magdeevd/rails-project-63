@@ -10,12 +10,11 @@ module HexletCode
   autoload :Submit, 'hexlet_code/inputs/submit'
   autoload :Label, 'hexlet_code/inputs/label'
   autoload :Form, 'hexlet_code/form'
+  autoload :FormBuilder, 'hexlet_code/form_builder'
 
   def self.form_for(entity, attrs = {})
     form = Form.new(entity, attrs)
     yield(form) if block_given?
-    Tag.build(form) do
-      form.content.map { |input| Tag.build(input) { input.content } }.join
-    end
+    FormBuilder.build(form)
   end
 end
